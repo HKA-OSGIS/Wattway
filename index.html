@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map with Charging Stations</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #map {
+            width: 100%;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([51.505, -0.09], 13);  // Set initial position and zoom level
+
+        // Tile Layer (OpenStreetMap tiles)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(map);
+
+        // Function to fetch charging stations within the current map bounds
+        function fetchChargingStations() {
+            var bounds = map.getBounds();  // Get the current map bounds (southwest and northeast corners)
+            var swLat = bounds.getSouthWest().lat;
+            var swLon = bounds.getSouthWest().lng;
+            var neLat = bounds.getNorthEast().lat;
+            var neLon = bounds.getNorthEast().lng;
+
+            // Construct API URL with bounds parameters
+            var apiUrl = `https://api.openchargemap.io/v3/poi?output=json&key=5331bcce-ab82-4dce-98ca-f05b58f5f657&latitude=${(swLat + neLat) / 2}&longitude=${(swLon + neLon) / 2}&maxresults=100`;
+
+            // Fetch charging stations
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Clear existing markers (if any)
+                    map.eachLayer(function (layer) {
+                        if (layer instanceof L.CircleMarker) {
+                            map.removeLayer(layer);
+                        }
+                    });
+
+                    // Add new markers for charging stations within the visible area
+                    data.forEach(station => {
+                        if (station.AddressInfo && station.AddressInfo.Latitude && station.AddressInfo.Longitude) {
+                            var lat = station.AddressInfo.Latitude;
+                            var lon = station.AddressInfo.Longitude;
+
+                            // Create marker
+                            var marker = L.circleMarker([lat, lon], {
+                                color: 'red',
+                                radius: 8,
+                            }).addTo(map);
+
+                            // Construct popup content with station details
+                            var popupContent = `
+                            <h3>Charging Station: ${station.AddressInfo.Title || 'Unknown'}</h3>
+                            <p><strong>Address:</strong> ${station.AddressInfo.AddressLine1 || 'N/A'}, ${station.AddressInfo.Town || 'N/A'}, ${station.AddressInfo.Postcode || 'N/A'}, ${station.AddressInfo.Country || 'N/A'}</p>
+                            <p><strong>Operator:</strong> ${station.OperatorInfo ? station.OperatorInfo.Title : 'Unknown'}</p>
+                            <p><strong>Status:</strong> ${station.StatusType ? station.StatusType.Title : 'Unknown'}</p>
+                            <p><strong>Location:</strong> Lat: ${lat}, Lon: ${lon}</p>
+                            <p><strong>Capacity:</strong> ${station.NumberOfPoints ? station.NumberOfPoints : 'N/A'}</p>
+                            <p><strong>Cost:</strong> ${station.Costs ? station.Costs : 'N/A'}</p>
+                            <p><strong>Number of Ports:</strong> ${station.NumberOfPoints ? station.NumberOfPoints : 'N/A'}</p>
+                            <p><strong>Is Pay at Location:</strong> ${station.UsageType ? station.UsageType.IsPayAtLocation : 'N/A'}</p>
+                            <p><strong>Is Membership Required:</strong> ${station.UsageType ? station.UsageType.IsMembershipRequired : 'N/A'}</p>
+                            <p><strong>Is Access Key Required:</strong> ${station.UsageType ? station.UsageType.IsAccessKeyRequired : 'N/A'}</p>
+                            <p><strong>Data Provider:</strong> ${station.DataProvider ? station.DataProvider.Title : 'Unknown'}</p>
+                            <p><strong>Last Imported:</strong> ${station.DateLastImported || 'N/A'}</p>
+                            <p><strong>Is Open Data Licensed:</strong> ${station.IsOpenDataLicensed ? 'Yes' : 'No'}</p>
+                            <p><strong>Location Comment:</strong> ${station.AddressInfo ? station.AddressInfo.AccessComments : 'N/A'}</p>
+                            <p><strong>Contact Email:</strong> ${station.OperatorInfo ? station.OperatorInfo.ContactEmail : 'N/A'}</p>
+                        `;
+
+                            // Bind the popup to the marker
+                            marker.bindPopup(popupContent);
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.log('Error fetching charging stations:', error);
+                });
+        }
+
+        // Fetch charging stations initially
+        fetchChargingStations();
+
+        // Fetch new stations when the map is moved or zoomed
+        map.on('moveend', function () {
+            fetchChargingStations();
+        });
+
+    </script>
+
+</body>
+
+</html>
