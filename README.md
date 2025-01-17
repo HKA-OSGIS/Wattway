@@ -29,3 +29,12 @@ Make requests against the HTTP server
 
     curl "http://127.0.0.1:5000/route/v1/driving/13.388860,52.517037;13.385983,52.496891?steps=true"
 
+## License
+
+[WattWay](https://github.com/HKA-OSGIS/Wattway) by [HKA-OSGEO Bhavin, Kiasal, Sandys, Ravi](https://github.com/bhikadiyabhavin) is licensed under the  
+[Creative Commons Attribution-NonCommercial 4.0 International License](https://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1).  
+
+![CC License](https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1)
+![BY License](https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1)
+![NC License](https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1)
+
