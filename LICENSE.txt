@@ -1,0 +1,35 @@
+# WattWay License
+
+This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0)**.
+
+![CC BY-NC 4.0 License](https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc.svg)
+
+---
+
+## Permissions
+✔ You are free to:
+- **Share** — copy and redistribute the material in any medium or format.
+- **Adapt** — remix, transform, and build upon the material.
+
+## Restrictions
+❌ The following restrictions apply:
+- **No Commercial Use** — You may not use the material for commercial purposes.
+- **Attribution Required** — You must give appropriate credit, provide a link to the license, and indicate if changes were made.
+
+---
+
+## Credits
+
+This project, **[WattWay](https://github.com/HKA-OSGIS/Wattway)**, is brought to you by:
+- [Bhavin Bhikadiya](https://github.com/bhikadiyabhavin)
+- Kiasal
+- Sandys
+- Ravi
+
+---
+
+## Full License Text
+
+For full license details, refer to the official license text at:
+[https://creativecommons.org/licenses/by-nc/4.0/](https://creativecommons.org/licenses/by-nc/4.0/)
+
