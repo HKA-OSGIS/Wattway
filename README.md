@@ -110,7 +110,7 @@ For any inquiries, please reach out to [bhikadiyabhavin258@gmail.com].
 
 ## License
 
-[WattWay](https://github.com/HKA-OSGIS/Wattway) by [HKA-OSGEO Bhavin, Kiasal, Sandys, Ravi](https://github.com/bhikadiyabhavin) is licensed under the  
+[WattWay](https://github.com/HKA-OSGIS/Wattway) by [HKA-OSGEO Bhavin, Kisal, Sandys, Ravi](https://github.com/bhikadiyabhavin) is licensed under the  
 [Creative Commons Attribution-NonCommercial 4.0 International License](https://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1).  
 
 ![CC License](https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1)
